@@ -51,24 +51,24 @@
 import joblib
 import pandas as pd
 
-model = None
-encoder = None
+model = joblib.load("model/best_model.pkl")
+encoder = joblib.load("model/store_encoder.pkl")
 
-def load_model():
-    global model, encoder
 
-    if model is None:
-        model = joblib.load("model/best_model.pkl")
-
-    if encoder is None:
-        encoder = joblib.load("model/store_encoder.pkl")
-
-def predict_sales(store, holiday, temperature, fuel_price, cpi, unemployment, year, month, week):
-    load_model()
-
+def predict_sales(
+    store,
+    holiday,
+    temperature,
+    fuel_price,
+    cpi,
+    unemployment,
+    year,
+    month,
+    week,
+):
     store = encoder.transform([store])[0]
 
-    data = pd.DataFrame({
+    sample = pd.DataFrame({
         "Store": [store],
         "Holiday_Flag": [holiday],
         "Temperature": [temperature],
@@ -80,4 +80,6 @@ def predict_sales(store, holiday, temperature, fuel_price, cpi, unemployment, ye
         "Week": [week]
     })
 
-    return model.predict(data)[0]
+    prediction = model.predict(sample)
+
+    return prediction[0]
