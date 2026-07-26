@@ -79,6 +79,7 @@ parso==0.8.7
 pexpect==4.9.0
 pillow==12.3.0
 platformdirs==4.11.0
+plotly==6.9.0
 prometheus_client==0.25.0
 prompt_toolkit==3.0.52
 protobuf==7.35.1
